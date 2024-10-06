@@ -2,10 +2,12 @@ extends Node
 
 class_name IdleState
 
+var player = Global.get_player()
+
 func enter_state():
 	print("Entering Idle state")
 
-func update_state(_delta, player):
+func update_state(_delta):
 	player.animated_sprite.play("idle")
 	
 	if Input.is_action_pressed("move_right") or Input.is_action_pressed("move_left"):
@@ -17,7 +19,5 @@ func update_state(_delta, player):
 	elif Input.is_action_just_pressed("attack"):
 		player.state_manager.set_state("AttackState")
 
-
 func exit_state():
 	pass
-	

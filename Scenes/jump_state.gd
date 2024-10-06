@@ -1,40 +1,36 @@
 extends Node
-
 class_name JumpState
 
-var jump_force = -400  # Ugrási erő
-var gravity = 900
+var player = Global.get_player()
 var velocity = Vector2()
 
 func enter_state():
 	print("Entering Jump state")
-	velocity.y = jump_force  # Alkalmazzuk az ugrási erőt
+	velocity.y = player.jump_force
 
-func update_state(_delta, player):
-	velocity.y += gravity * _delta  # Gravitáció alkalmazása
+func update_state(delta):
+	player.animated_sprite.play("jump" if velocity.y < 0 else "fall")
+
+	velocity.y += Global.gravity * delta
+	
+	if Input.is_action_just_released("jump") and velocity.y < 0:
+		velocity.y *= player.decelerate_on_jump_release
+	
+	var direction = Input.get_axis("move_left", "move_right")
+	player.velocity.x = player.speed * direction
+	player.animated_sprite.flip_h = direction < 0
+	
 	player.velocity.y = velocity.y
-	player.move_and_slide()  # Karakter mozgatása ugrás közben
 	
-	# Animáció
+	player.move_and_slide()
 	
-	if player.velocity.y > 0:
-		player.animated_sprite.play("jump")
-	elif player.velocity.y < 0:
-		player.animated_sprite.play("fall")
+	if Input.is_action_pressed("dash"):
+		player.state_manager.set_state("DashState")
 	
-	var horizontal_velocity = 0
-	if Input.is_action_pressed("move_right"):
-		horizontal_velocity += player.speed  # Jobbra mozgás
-		player.animated_sprite.flip_h = false
-	elif Input.is_action_pressed("move_left"):
-		horizontal_velocity -= player.speed  # Balra mozgás
-		player.animated_sprite.flip_h = true
-
-	# A vízszintes sebességet beállítjuk
-	player.velocity.x = horizontal_velocity
-
 	if player.is_on_floor():
-		player.state_manager.set_state("IdleState")  # Ha visszaér a földre, visszatérünk az idle állapotba
+		player.state_manager.set_state("IdleState")
+	elif Input.is_action_just_pressed("dash") and direction and not player.is_dashing and player.dash_timer <= 0:
+		player.state_manager.set_state("DashState")
 
 func exit_state():
 	print("Exiting Jump state")

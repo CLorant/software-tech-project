@@ -2,18 +2,21 @@ extends Node
 
 class_name AttackState
 
-var attack_timer: Timer
+var player = Global.get_player()
+var attack_counter = 1
 
 func enter_state():
 	print("Entering Attack state")
-
-func update_state(_delta, player):
-	# Itt lehetne a támadás animáció kezelése is
+	player.animated_sprite.play("attack_horizontal_" + str(attack_counter))
 	
-	if Input.is_action_pressed("attack"):
-		player.animated_sprite.play("attack_horizontal")
-	else:
-		player.state_manager.set_state("IdleState")
+	await player.animated_sprite.animation_finished
+	
+	attack_counter = attack_counter % 2 + 1
+	
+	player.state_manager.set_state("IdleState")
+
+func update_state(_delta):
+	pass
 
 func exit_state():
 	print("Exiting Attack state")
