@@ -31,7 +31,7 @@ func update_state(_delta):
 		player.state_manager.set_state("CrouchState")
 	elif Input.is_action_just_pressed("attack"):
 		player.state_manager.set_state("AttackState")
-	elif Input.is_action_just_pressed("dash") and direction and not player.is_dashing and player.dash_timer <= 0:
+	elif player.can_dash():
 		player.state_manager.set_state("DashState")
 
 func exit_state():

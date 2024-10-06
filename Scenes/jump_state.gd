@@ -24,12 +24,9 @@ func update_state(delta):
 	
 	player.move_and_slide()
 	
-	if Input.is_action_pressed("dash"):
-		player.state_manager.set_state("DashState")
-	
 	if player.is_on_floor():
 		player.state_manager.set_state("IdleState")
-	elif Input.is_action_just_pressed("dash") and direction and not player.is_dashing and player.dash_timer <= 0:
+	elif player.can_dash():
 		player.state_manager.set_state("DashState")
 
 func exit_state():

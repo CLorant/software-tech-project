@@ -19,6 +19,8 @@ var dash_start_position = 0
 var dash_direction = 0
 var dash_timer = 0
 
+var skill_settings = {}
+
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 func _ready():
@@ -38,6 +40,12 @@ func _ready():
 	
 	# Kezdeti állapot beállítása
 	state_manager.set_state("IdleState")
+	
+	skill_settings = ConfigFileHandler.load_skill_settings()
+
+func can_dash():
+	var direction = Input.get_axis("move_left", "move_right")
+	return Input.is_action_just_pressed("dash") and direction != 0 and not is_dashing and dash_timer <= 0 and skill_settings.has_dash
 
 # A physics_process használata az állapot frissítéséhez
 func _physics_process(delta):
