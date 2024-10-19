@@ -11,13 +11,14 @@ config_version=5
 [application]
 
 config/name="5fiu1jatek"
-run/main_scene="res://Scenes/game.tscn"
+run/main_scene="res://Scenes/level_0.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
-Global="*res://global.gd"
+Global="*res://Singletons/global.gd"
+ConfigFileHandler="*res://Singletons/config_file_handler.gd"
 
 [dotnet]
 

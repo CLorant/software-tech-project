@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://1e3d8b05uuet"]
+
+[ext_resource type="Texture2D" uid="uid://bbqmloxtbnnvp" path="res://Assets/Sprites/fas/Foreground/Tileset.png" id="1_ntscb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qlfl1"]
+size = Vector2(44, 8)
+
+[node name="Platform" type="AnimatableBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_ntscb")
+region_enabled = true
+region_rect = Rect2(105, 32, 45, 7)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_qlfl1")
+one_way_collision = true

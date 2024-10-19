@@ -8,20 +8,14 @@ func enter_state():
 	print("Entering Move state")
 
 func update_state(_delta):
+	player.animated_sprite.play("run")
+	
 	var direction = Input.get_axis("move_left", "move_right")
-	player.animated_sprite.play("idle" if direction == 0 else "run")
 	
 	if direction:
 		player.velocity.x = direction * player.speed
 	else:
 		player.velocity.x = move_toward(player.velocity.x, player.deceleration, player.speed)
-	
-	if direction < 0:
-		player.animated_sprite.flip_h = true
-	elif direction > 0:
-		player.animated_sprite.flip_h = false
-
-	player.move_and_slide()
 
 	if direction == 0:
 		player.state_manager.set_state("IdleState")

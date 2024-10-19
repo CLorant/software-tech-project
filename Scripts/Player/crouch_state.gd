@@ -14,14 +14,8 @@ func update_state(_delta):
 
 	var direction = Input.get_axis("move_left", "move_right")
 	player.animated_sprite.play("crouch" if direction == 0 else "crouch_walk")
-	
-	if direction < 0:
-		player.animated_sprite.flip_h = true
-	elif direction > 0:
-		player.animated_sprite.flip_h = false
-
+		
 	player.velocity.x = player.crouch_speed * direction
-	player.move_and_slide()
 
 func exit_state():
 	print("Exiting Crouch state")

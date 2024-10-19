@@ -30,9 +30,6 @@ func update_state(delta):
 	elif not player.is_on_floor() and not player.is_dashing:
 		var direction = Input.get_axis("move_left", "move_right")
 		player.velocity.x = player.speed * direction
-		player.animated_sprite.flip_h = direction < 0
-
-	player.move_and_slide()
 
 func exit_state():
 	print("Exiting Dash state")

@@ -1,7 +1,7 @@
 [gd_scene load_steps=68 format=3 uid="uid://cmec0n62pvkcq"]
 
 [ext_resource type="Texture2D" uid="uid://djcpl6k0pyjrx" path="res://Assets/Sprites/PlayerKnight/_Idle.png" id="1_h26ic"]
-[ext_resource type="Script" path="res://Scenes/player.gd" id="1_xrjg8"]
+[ext_resource type="Script" path="res://Scripts/Player/player.gd" id="1_xrjg8"]
 [ext_resource type="Texture2D" uid="uid://nvedyrmf1uln" path="res://Assets/Sprites/PlayerKnight/_Attack.png" id="2_r7whq"]
 [ext_resource type="Texture2D" uid="uid://b6mfwyeo5cj42" path="res://Assets/Sprites/PlayerKnight/_Attack2.png" id="3_cyejh"]
 [ext_resource type="Texture2D" uid="uid://dsr2tswsf4xi7" path="res://Assets/Sprites/PlayerKnight/_Crouch.png" id="3_gkywf"]
@@ -10,13 +10,13 @@
 [ext_resource type="Texture2D" uid="uid://uvvg1d03u8lw" path="res://Assets/Sprites/PlayerKnight/_Fall.png" id="5_jf5po"]
 [ext_resource type="Texture2D" uid="uid://cqa10bik20avq" path="res://Assets/Sprites/PlayerKnight/_Dash.png" id="6_5p1en"]
 [ext_resource type="Texture2D" uid="uid://fe07gqtiyxwr" path="res://Assets/Sprites/PlayerKnight/_Jump.png" id="7_dj0nn"]
-[ext_resource type="Script" path="res://Scenes/state_manager.gd" id="9_si64j"]
-[ext_resource type="Script" path="res://Scenes/idle_state.gd" id="10_vatgy"]
-[ext_resource type="Script" path="res://Scenes/move_state.gd" id="11_6x1ux"]
-[ext_resource type="Script" path="res://Scenes/jump_state.gd" id="12_v5olf"]
-[ext_resource type="Script" path="res://Scenes/attack_state.gd" id="13_drdyw"]
-[ext_resource type="Script" path="res://Scenes/crouch_state.gd" id="14_5wr5h"]
-[ext_resource type="Script" path="res://Scenes/dash_state.gd" id="17_oiy3s"]
+[ext_resource type="Script" path="res://Scripts/Player/state_manager.gd" id="9_si64j"]
+[ext_resource type="Script" path="res://Scripts/Player/idle_state.gd" id="10_vatgy"]
+[ext_resource type="Script" path="res://Scripts/Player/move_state.gd" id="11_6x1ux"]
+[ext_resource type="Script" path="res://Scripts/Player/jump_state.gd" id="12_v5olf"]
+[ext_resource type="Script" path="res://Scripts/Player/attack_state.gd" id="13_drdyw"]
+[ext_resource type="Script" path="res://Scripts/Player/crouch_state.gd" id="14_5wr5h"]
+[ext_resource type="Script" path="res://Scripts/Player/dash_state.gd" id="17_oiy3s"]
 
 [sub_resource type="Curve" id="Curve_e3kva"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.993464, 0.484465), -1.76653, 0.0, 0, 0]
@@ -403,14 +403,14 @@ animations = [{
 radius = 8.0
 height = 34.0
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
 script = ExtResource("1_xrjg8")
 dash_curve = SubResource("Curve_e3kva")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(4, -40)
 sprite_frames = SubResource("SpriteFrames_srnb7")
-animation = &"dash"
+animation = &"idle"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

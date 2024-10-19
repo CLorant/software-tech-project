@@ -1,0 +1,92 @@
+[gd_scene load_steps=14 format=3 uid="uid://bq0w8onubag8"]
+
+[ext_resource type="Texture2D" uid="uid://dg16xp4v2qh6s" path="res://Assets/Sprites/bonfire/bonfire.png" id="1_52qh4"]
+[ext_resource type="Script" path="res://Scripts/Levels/next_level.gd" id="1_on006"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_18k1s"]
+atlas = ExtResource("1_52qh4")
+region = Rect2(0, 0, 33, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_siq4m"]
+atlas = ExtResource("1_52qh4")
+region = Rect2(33, 0, 33, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hnt1t"]
+atlas = ExtResource("1_52qh4")
+region = Rect2(66, 0, 33, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_km546"]
+atlas = ExtResource("1_52qh4")
+region = Rect2(99, 0, 33, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_38kvr"]
+atlas = ExtResource("1_52qh4")
+region = Rect2(132, 0, 33, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cos0v"]
+atlas = ExtResource("1_52qh4")
+region = Rect2(165, 0, 33, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_70sx6"]
+atlas = ExtResource("1_52qh4")
+region = Rect2(198, 0, 33, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n0by1"]
+atlas = ExtResource("1_52qh4")
+region = Rect2(231, 0, 33, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dfj2b"]
+atlas = ExtResource("1_52qh4")
+region = Rect2(264, 0, 33, 38)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hj4q1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_18k1s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_siq4m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hnt1t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_km546")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_38kvr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cos0v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_70sx6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n0by1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dfj2b")
+}],
+"loop": true,
+"name": &"bonfire",
+"speed": 6.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_swkrj"]
+size = Vector2(26, 27)
+
+[node name="NextLevel" type="Area2D"]
+script = ExtResource("1_on006")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_hj4q1")
+animation = &"bonfire"
+frame_progress = 0.321625
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -2.5)
+shape = SubResource("RectangleShape2D_swkrj")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
