@@ -14,4 +14,7 @@ func _on_body_entered(body: Node2D) -> void:
 		var next_level_number = current_scene_file.to_int() + 1
 		
 		var next_level_path = FILE_BEGIN + str(next_level_number) + FILE_END
-		get_tree().change_scene_to_file(next_level_path)
+		call_deferred("_change_scene", next_level_path)
+
+func _change_scene(next_level_path: String) -> void:
+	get_tree().change_scene_to_file(next_level_path)
