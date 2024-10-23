@@ -14,17 +14,25 @@ var state_manager: StateManager
 @export var dash_curve : Curve
 @export var dash_cooldown = 5.0
 
+@export var double_jump_cooldown = 5.0
+
 var is_dashing = false
 var dash_start_position = 0
 var dash_direction = 0
 var dash_timer = 0
+
+var double_jump_timer = 0
 
 var skill_settings = {}
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 func _ready():
+	### For testing, delete later
 	ConfigFileHandler.save_skill_setting("has_dash", true)
+	ConfigFileHandler.save_skill_setting("has_double_jump", true)
+	###
+	
 	Global.set_player(self)
 	
 	state_manager = StateManager.new()
@@ -46,14 +54,13 @@ func can_dash():
 	var direction = Input.get_axis("move_left", "move_right")
 	return Input.is_action_just_pressed("dash") and direction != 0 and not is_dashing and dash_timer <= 0 and skill_settings.has_dash
 
-func apply_gravity(delta):
+func can_double_jump():
+	return Input.is_action_just_pressed("jump") and double_jump_timer <= 0 and skill_settings.has_double_jump
+
+func _physics_process(delta):
 	if not is_on_floor():
 		velocity.y += Global.gravity * delta
 
-func _physics_process(delta):
-	# TODO: play fall animation
-	apply_gravity(delta)
-	
 	state_manager.update_state(delta)
 	
 	var direction = Input.get_axis("move_left", "move_right")
@@ -64,5 +71,8 @@ func _physics_process(delta):
 	
 	if dash_timer > 0:
 		dash_timer -= delta
+		
+	if double_jump_timer > 0:
+		double_jump_timer -= delta
 	
 	move_and_slide()
