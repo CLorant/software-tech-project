@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://d4g2nhkw5cv2j"]
+[gd_scene load_steps=14 format=4 uid="uid://d4g2nhkw5cv2j"]
 
 [ext_resource type="Texture2D" uid="uid://cqssom0pq3jbo" path="res://Assets/Sprites/fas/Background/CloudsBack.png" id="1_8ocqp"]
 [ext_resource type="Texture2D" uid="uid://bbqmloxtbnnvp" path="res://Assets/Sprites/fas/Foreground/Tileset.png" id="1_ghlgi"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://1e3d8b05uuet" path="res://Scenes/platform.tscn" id="3_a0p01"]
 [ext_resource type="PackedScene" uid="uid://cmec0n62pvkcq" path="res://Scenes/player.tscn" id="4_t4yut"]
 [ext_resource type="PackedScene" uid="uid://bq0w8onubag8" path="res://Scenes/next_level.tscn" id="5_6smbp"]
+[ext_resource type="PackedScene" uid="uid://cv1o00qy0vxmk" path="res://Scenes/slime.tscn" id="7_ranaa"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ewbdl"]
 texture = ExtResource("1_ghlgi")
@@ -191,6 +192,15 @@ position = Vector2(-37, -9)
 [node name="Player" parent="." instance=ExtResource("4_t4yut")]
 z_index = 5
 position = Vector2(-118, 54)
+speed = 200.0
+deceleration = 0.1
+jump_force = -400
+decelerate_on_jump_release = 0.5
+health = 10
+damage = 20
+dash_max_distance = 100.0
+dash_cooldown = 5.0
+double_jump_cooldown = 5.0
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2(134, -18)
@@ -210,3 +220,9 @@ autoplay = "move"
 
 [node name="NextLevel" parent="." instance=ExtResource("5_6smbp")]
 position = Vector2(571, -22)
+
+[node name="Slime" parent="." instance=ExtResource("7_ranaa")]
+position = Vector2(106, -59)
+
+[node name="Slime2" parent="." instance=ExtResource("7_ranaa")]
+position = Vector2(211, 5)

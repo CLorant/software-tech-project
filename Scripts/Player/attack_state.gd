@@ -10,7 +10,11 @@ func enter_state():
 	player.animated_sprite.play("attack_horizontal_" + str(attack_counter))
 	attack_counter = attack_counter % 2 + 1
 	
+	player.attack_area.disabled = false
+	
 	await player.animated_sprite.animation_finished
+	
+	player.attack_area.disabled = true
 	
 	if Input.is_action_pressed("crouch"):
 		player.state_manager.set_state("CrouchState")
