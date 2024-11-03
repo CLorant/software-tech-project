@@ -6,6 +6,7 @@ const FILE_END = ".tscn"
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 func _ready() -> void:
+	Global.set_starting_position()
 	animated_sprite.play("bonfire")
 
 func _on_body_entered(body: Node2D) -> void:

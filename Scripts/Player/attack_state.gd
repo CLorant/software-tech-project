@@ -8,15 +8,29 @@ var attack_counter = 1
 func enter_state():
 	print("Entering Attack state")
 	player.animated_sprite.play("attack_horizontal_" + str(attack_counter))
+	attack_counter = attack_counter % 2 + 1
+	
+	player.attack_area.disabled = false
 	
 	await player.animated_sprite.animation_finished
 	
-	attack_counter = attack_counter % 2 + 1
+	player.attack_area.disabled = true
 	
-	player.state_manager.set_state("IdleState")
+	if Input.is_action_pressed("crouch"):
+		player.state_manager.set_state("CrouchState")
+	else:
+		player.state_manager.set_state("IdleState")
 
 func update_state(_delta):
-	pass
+	if player.is_on_floor():
+		player.velocity.x = 0
+	else:
+		var direction = Input.get_axis("move_left", "move_right")
+		player.velocity.x = player.crouch_speed * direction
+		player.animated_sprite.play("attack_horizontal_1")
+	
+	if Input.is_action_pressed("crouch"):
+		player.animated_sprite.play("crouch_attack")
 
 func exit_state():
 	print("Exiting Attack state")
