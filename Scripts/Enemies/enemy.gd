@@ -6,6 +6,7 @@ var player_chase = false
 var is_attacking = false
 var player_in_attack_area = false
 var player = null
+var player_hitbox = null
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var attack_area = $AttackArea/CollisionShape2D
@@ -17,8 +18,6 @@ var player = null
 func _physics_process(delta: float) -> void:
 	if health == 0:
 		animated_sprite.play("death")
-		await animated_sprite.animation_finished
-		queue_free()
 	
 	if not is_on_floor():
 		velocity.y += Global.gravity * delta
@@ -35,6 +34,9 @@ func _physics_process(delta: float) -> void:
 		else:
 			animated_sprite.flip_h = true
 			attack_area.position.x = abs(attack_area.position.x);
+	
+	if not player_chase and not animated_sprite.animation_finished:
+		animated_sprite.play("idle")
 	
 	move_and_slide()
 	
@@ -54,22 +56,23 @@ func _on_hit_box_area_entered(area: Area2D) -> void:
 	
 	#TODO: Add attack_2
 
-#TODO: Fix attack area reenter damage multiplication
 func _on_attack_area_area_entered(area: Area2D) -> void:
 	if area.is_in_group("player_hitbox"):
+		player_hitbox = area
 		player_in_attack_area = true
-		while player_in_attack_area:
-			is_attacking = true
-			animated_sprite.play("attack_1")
-			
-			await animated_sprite.animation_finished
-			
-			if player_in_attack_area:
-				player.health = max(0, player.health - damage)
-				print("Player health: " + str(player.health))
-			
-			is_attacking = false
-		animated_sprite.play("idle")
+		is_attacking = true
+		animated_sprite.play("attack_1")
 
 func _on_attack_area_area_exited(area: Area2D) -> void:
 	player_in_attack_area = false
+
+func _on_animated_sprite_2d_animation_finished() -> void:
+	if animated_sprite.animation == "death":
+		queue_free()
+	elif animated_sprite.animation == "attack_1":
+		is_attacking = false
+		animated_sprite.play("idle")
+		
+		if player_in_attack_area:
+			player.inflict_damage(damage)
+			_on_attack_area_area_entered(player_hitbox)

@@ -9,8 +9,8 @@ var state_manager: StateManager
 
 @export var crouch_speed = speed / 2
 
-const max_health = 100
-@export var health = max_health
+var max_health = 100
+@export var health = 0
 @export var damage = 20
 
 @export var dash_speed = speed * 3
@@ -26,17 +26,21 @@ var dash_direction = 0
 var dash_timer = 0
 
 var double_jump_timer = 0
+var wall_jump_timer = 0
 
 var skill_settings = {}
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var attack_area = $AttackArea/CollisionShape2D
+@onready var attack_area: CollisionShape2D = $AttackArea/CollisionShape2D
 
 func _ready():
 	### For testing, delete later
 	ConfigFileHandler.save_skill_setting("has_dash", true)
 	ConfigFileHandler.save_skill_setting("has_double_jump", true)
+	ConfigFileHandler.save_skill_setting("has_wall_jump", true)
 	###
+	
+	health = max_health
 	
 	Global.set_player(self)
 	
@@ -62,6 +66,9 @@ func can_dash():
 
 func can_double_jump():
 	return Input.is_action_just_pressed("jump") and double_jump_timer <= 0 and skill_settings.has_double_jump
+	
+func can_wall_jump():
+	return is_on_wall() and wall_jump_timer <= 0 and skill_settings.has_wall_jump
 
 func _physics_process(delta):
 	if health == 0 and state_manager.current_state is not DeathState:
@@ -88,5 +95,21 @@ func _physics_process(delta):
 	
 	move_and_slide()
 
+func inflict_damage(enemy_damage):
+	health = max(0, health - enemy_damage)
+	print("Player health: " + str(health))
+
 func reset_health():
 	health = max_health
+
+func _on_animated_sprite_2d_animation_finished() -> void:
+	if animated_sprite.animation == "death":
+		reset_health()
+		position = Global.get_starting_position()
+		state_manager.set_state("IdleState")
+	elif animated_sprite.animation == "attack_horizontal_1" or animated_sprite.animation == "attack_horizontal_2" or animated_sprite.animation == "crouch_attack":
+		attack_area.disabled = true
+		if Input.is_action_pressed("crouch"):
+			state_manager.set_state("CrouchState")
+		else:
+			state_manager.set_state("IdleState")
