@@ -4,13 +4,17 @@ const FILE_BEGIN = "res://Scenes/level_"
 const FILE_END = ".tscn"
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+var player: CharacterBody2D
 
 func _ready() -> void:
 	Global.set_starting_position()
 	animated_sprite.play("bonfire")
+	player = Global.get_player()
 
 func _on_body_entered(body: Node2D) -> void:
-	if body.is_in_group("Player"):
+	if body.is_in_group("player"):
+		player.reset_health()
+		
 		var current_scene_file = get_tree().current_scene.scene_file_path
 		var next_level_number = current_scene_file.to_int() + 1
 		

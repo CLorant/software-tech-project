@@ -8,9 +8,11 @@ func _ready() -> void:
 		config.set_value("audio", "master_volume", 1.0)
 		config.set_value("audio", "sfx_volume", 1.0)
 		
+		# config.set_value("level", "current_level", )
+		
 		config.set_value("skill", "has_dash", false)
 		config.set_value("skill", "has_double_jump", false)
-		config.set_value("skill", "has_combo_attack", false)
+		config.set_value("skill", "has_wall_jump", false)
 		
 		config.save(SETTINGS_FILE_PATH)
 	else:

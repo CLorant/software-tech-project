@@ -395,6 +395,7 @@ shape = SubResource("CapsuleShape2D_cw6vj")
 position = Vector2(0, 40)
 shape = SubResource("CapsuleShape2D_go6ee")
 
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="area_entered" from="AttackArea" to="." method="_on_attack_area_area_entered"]
 [connection signal="area_exited" from="AttackArea" to="." method="_on_attack_area_area_exited"]
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]
