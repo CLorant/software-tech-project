@@ -220,4 +220,4 @@ position = Vector2(106, -59)
 [node name="Slime2" parent="." instance=ExtResource("7_ranaa")]
 position = Vector2(211, 5)
 
-[node name="UI" parent="." instance=ExtResource("8_i5wbl")]
+[node name="InGameUI" parent="." instance=ExtResource("8_i5wbl")]
