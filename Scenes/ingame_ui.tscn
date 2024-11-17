@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://bs4x8quyv4wxv"]
 
-[ext_resource type="Script" path="res://Scenes/ingame_ui.gd" id="1_5a5sp"]
+[ext_resource type="Script" path="res://Scripts/UI/ingame_ui.gd" id="1_5a5sp"]
 [ext_resource type="Texture2D" uid="uid://7htcn0dvowgi" path="res://Assets/Sprites/castle/Medieval_Castle_Asset_Pack/HUD/bar_background.png" id="1_ta4kw"]
 [ext_resource type="Texture2D" uid="uid://c5ehgxan41a37" path="res://Assets/Sprites/UI/skills/dash.png" id="1_yhwao"]
 [ext_resource type="Texture2D" uid="uid://de06aabtux05n" path="res://Assets/Sprites/castle/Medieval_Castle_Asset_Pack/HUD/health_bar.png" id="2_3owyc"]
